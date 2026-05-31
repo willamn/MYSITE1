@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f5f7fa;
+    }
+    .user-wrap {
+        max-width: 800px;
+        margin: 40px auto;
+    }
+    .user-top-card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        padding: 30px;
+        margin-bottom: 25px;
+    }
+    .user-head-info {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    .user-avatar {
+        width: 85px;
+        height: 85px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #165DFF;
+    }
+    .user-name h3 {
+        font-size: 20px;
+        color: #222;
+        margin: 0 0 8px 0;
+    }
+    .active-time {
+        font-size: 14px;
+        color: #666;
+    }
+    /* 菜单按钮 */
+    .user-menu-box {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+    .menu-item {
+        background: #fff;
+        text-align: center;
+        padding: 25px 10px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        cursor: pointer;
+        transition: 0.2s;
+        border: none;
+        width: 100%;
+        font-size: 14px;
+    }
+    .menu-item.active {
+        background: #165DFF;
+        color: #fff;
+    }
+    .menu-num {
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 6px;
+    }
+    /* 内容区域 */
+    .content-card {
+        background: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .tab-content {
+        display: none;
+    }
+    .tab-content.active {
+        display: block;
+    }
+    /* 列表样式 */
+    .item-row {
+        padding: 15px 0;
+        border-bottom: 1px solid #eee;
+    }
+    .item-row:last-child {
+        border-bottom: none;
+    }
+    .status {
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        margin-left: 10px;
+    }
+    .pending { background: #fff3cd; color: #d39e00; }
+    .published { background: #d1e7dd; color: #0f5132; }
+    .empty {
+        text-align: center;
+        padding: 40px;
+        color: #666;
+    }
+</style>
+
+<div class="user-wrap">
+    <!-- 顶部：头像 + 用户名 + 活跃时间 -->
+<div class="user-top-card">
+    <div class="user-head-info">
+        <!-- 上传头像表单（隐藏原生文件框，点击头像触发） -->
+        <form method="post" action="{% url 'upload_avatar' %}" enctype="multipart/form-data" style="margin:0;">
+            {% csrf_token %}
+            <!-- 隐藏的文件选择框 -->
+            <input type="file" id="avatar-input" name="avatar" accept="image/*" style="display:none;" onchange="this.form.submit()">
+            <!-- 点击label触发文件选择 -->
+            <label for="avatar-input" style="cursor:pointer; margin:0;">
+                <img class="user-avatar" 
+                     src="{% if user.profile.avatar %}{{ user.profile.avatar.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" 
+                     alt="头像" style="width:85px;height:85px;border-radius:50%;object-fit:cover;">
+            </label>
+        </form>
+        <div class="user-name">
+            <h3>{{ user.username }}</h3>
+            <div class="active-time">最近活跃：{{ user.last_login|date:"Y-m-d H:i" }}</div>
+        </div>
+    </div>
+</div>
+
+    <!-- 四大菜单（点击切换，无跳转） -->
+    <div class="user-menu-box">
+        <button class="menu-item active" onclick="switchTab('posts')">
+            <div class="menu-num">{{ post_count }}</div>
+            <div class="menu-text">我的帖子</div>
+        </button>
+        <button class="menu-item" onclick="switchTab('comments')">
+            <div class="menu-num">{{ comment_count }}</div>
+            <div class="menu-text">我的评论</div>
+        </button>
+        <button class="menu-item" onclick="switchTab('likes')">
+            <div class="menu-num">{{ like_count }}</div>
+            <div class="menu-text">我的点赞</div>
+        </button>
+        <button class="menu-item" onclick="switchTab('collects')">
+            <div class="menu-num">{{ collect_count }}</div>
+            <div class="menu-text">我的收藏</div>
+        </button>
+    </div>
+
+    <!-- 内容展示区（全部在本页面，不跳转） -->
+    <div class="content-card">
+        <!-- 我的帖子 -->
+        <div id="posts" class="tab-content active">
+            {% for post in my_posts %}
+            <div class="item-row">
+                <div style="display:flex;justify-content:space-between;">
+                    <strong>{{ post.title }}</strong>
+                    {% if post.status == 0 %}
+                    <span class="status pending">待审核</span>
+                    {% else %}
+                    <span class="status published">已发布</span>
+                    {% endif %}
+                </div>
+                <p style="margin:5px 0;color:#666;">{{ post.content|truncatechars:80 }}</p>
+                <small>{{ post.create_time|date:"Y-m-d" }}</small>
+            </div>
+            {% empty %}
+            <div class="empty">暂无帖子</div>
+            {% endfor %}
+        </div>
+
+        <!-- 我的评论 -->
+        <div id="comments" class="tab-content">
+            {% for item in my_comments %}
+            <div class="item-row">
+                <div>评论了：<strong>{{ item.post.title }}</strong></div>
+                <p style="margin:5px 0;color:#666;">{{ item.content|truncatechars:80 }}</p>
+                <small>{{ item.create_time|date:"Y-m-d" }}</small>
+            </div>
+            {% empty %}
+            <div class="empty">暂无评论</div>
+            {% endfor %}
+        </div>
+
+        <!-- 我的点赞 -->
+        <div id="likes" class="tab-content">
+            {% for item in my_likes %}
+            <div class="item-row">
+                点赞了：<strong>{{ item.post.title }}</strong>
+                <small style="display:block;margin-top:5px;color:#999;">{{ item.create_time|date:"Y-m-d" }}</small>
+            </div>
+            {% empty %}
+            <div class="empty">暂无点赞</div>
+            {% endfor %}
+        </div>
+
+        <!-- 我的收藏 -->
+        <div id="collects" class="tab-content">
+            {% for item in my_collects %}
+            <div class="item-row">
+                收藏了：<strong>{{ item.post.title }}</strong>
+                <small style="display:block;margin-top:5px;color:#999;">{{ item.create_time|date:"Y-m-d" }}</small>
+            </div>
+            {% empty %}
+            <div class="empty">暂无收藏</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- 切换逻辑（纯前端，无跳转） -->
+<script>
+function switchTab(tabName) {
+    // 隐藏所有内容
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    // 取消所有按钮高亮
+    document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+    // 显示对应内容
+    document.getElementById(tabName).classList.add('active');
+    // 高亮当前按钮
+    event.currentTarget.classList.add('active');
+}
+</script>
+{% endblock %}

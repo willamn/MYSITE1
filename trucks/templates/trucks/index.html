@@ -1,0 +1,249 @@
+{% extends 'trucks/base.html' %}
+{% load static %}
+
+{% block title %}首页 - 智能机器人卡车{% endblock %}
+
+{% block content %}
+
+<!-- 1. Banner 全屏轮播 -->
+<div class="banner-carousel">
+    <div class="banner-slides">
+        <img src="{% static 'trucks/images/index/banner1.jpeg' %}" alt="智能机器人卡车轮播1">
+        <img src="{% static 'trucks/images/index/banner2.jpeg' %}" alt="智能机器人卡车轮播2">
+        <img src="{% static 'trucks/images/index/banner3.jpeg' %}" alt="智能机器人卡车轮播3">
+    </div>
+    <div class="hero-text">
+        <h1>工业智能机器人卡车</h1>
+        <p>自主导航 · 重载运输 · 云端协同 · 智慧物流新范式</p>
+        <a href="/trucks/" class="hero-btn">查看产品</a>
+    </div>
+</div>
+
+<!-- 2. 核心优势：左图右文（带图） -->
+<div class="container">
+    <h2 class="page-title">核心优势</h2>
+    <p class="page-subtitle">以技术为核心，打造全场景无人化运输能力</p>
+
+    <div class="advantage-item">
+        <div class="advantage-img">
+            <img src="{% static 'trucks/images/index/nav.jpg' %}" alt="自主导航">
+        </div>
+        <div class="advantage-text">
+            <h3>🤖 自主导航</h3>
+            <p>激光SLAM+视觉融合导航，厘米级定位精度，适配工厂、矿山、港口等复杂场景，稳定可靠不迷路。</p>
+        </div>
+    </div>
+
+    <div class="advantage-item">
+        <div class="advantage-img">
+            <img src="{% static 'trucks/images/index/truck_load.jpg' %}" alt="重载可靠">
+        </div>
+        <div class="advantage-text">
+            <h3>📦 重载可靠</h3>
+            <p>5-50吨级多规格载重，军工级底盘，防水防尘IP67，可24小时不间断稳定运行。</p>
+        </div>
+    </div>
+
+    <div class="advantage-item">
+        <div class="advantage-img">
+            <img src="{% static 'trucks/images/index/cloud.jpg' %}" alt="云端调度">
+        </div>
+        <div class="advantage-text">
+            <h3>🔗 云端调度</h3>
+            <p>支持百台车队协同调度，实时监控，数据可视化，整体运输效率提升3倍以上。</p>
+        </div>
+    </div>
+</div>
+
+<!-- 3. 核心技术专栏：带图+通栏（恢复图片） -->
+<div class="tech-section">
+    <div class="tech-container">
+        <h2 class="page-title">核心技术专栏</h2>
+        <p class="page-subtitle">基于多模态感知与AI决策，打造全场景无人化运输解决方案</p> 
+        <a href="http://localhost:8001/">跳转到项目</a>
+        <div class="tech-grid">
+            <div class="tech-item">
+                <img src="{% static 'trucks/images/index/tech_nav.jpg' %}" alt="多传感器融合导航">
+                <div class="tech-info">
+                    <h3>🛰️ 多传感器融合导航</h3>
+                    <p><strong>技术原理：</strong>融合激光SLAM、视觉摄像头与毫米波雷达数据。</p>
+                    <p><strong>核心亮点：</strong>无惧强光粉尘干扰，厘米级精准定位，动态避障。</p>
+                </div>
+            </div>
+            <div class="tech-item">
+                <img src="{% static 'trucks/images/index/tech_chassis.jpg' %}" alt="重载智能底盘">
+                <div class="tech-info">
+                    <h3>🏗️ 重载智能底盘</h3>
+                    <p><strong>技术原理：</strong>军工级轻量化合金与模块化架构。</p>
+                    <p><strong>核心亮点：</strong>5-50吨重载，IP67防护，24小时稳定作业。</p>
+                </div>
+            </div>
+            <div class="tech-item">
+                <img src="{% static 'trucks/images/index/tech_cloud.jpg' %}" alt="AI云端协同调度">
+                <div class="tech-info">
+                    <h3>🧠 AI云端协同调度</h3>
+                    <p><strong>技术原理：</strong>大数据训练AI引擎，实时调度最优路径。</p>
+                    <p><strong>核心亮点：</strong>百台车队无冲突运行，降低运营成本30%+。</p>
+                </div>
+            </div>
+        </div>
+
+<!-- ========== 新增：新兴产品展示（替换原持续创新位置） ========== -->
+<style>
+/* 产品展示模块 - 双视频并排 */
+.product-showcase {
+    margin-top: 60px;
+    padding: 40px;
+    background-color: #f9fafc;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 86, 179, 0.05);
+    text-align: center;
+}
+
+.showcase-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #0056b3;
+    margin-bottom: 30px;
+}
+
+/* 双视频容器：弹性布局并排 */
+.videos-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 单个视频卡片 */
+.video-card {
+    width: 48%;
+    min-width: 300px;
+}
+
+.video-card h4 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.showcase-video {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.video-card .showcase-description {
+    margin: 15px auto 0;
+    line-height: 1.8;
+    color: #333;
+    font-size: 15px;
+    padding: 0 10px;
+}
+</style>
+
+<div class="product-showcase">
+    <h3 class="showcase-title">新一代智能重载无人车演示</h3>
+    <div class="videos-wrapper">
+        <!-- 第一个视频：小车配置阶段 -->
+        <div class="video-card">
+            <h4>🚧 小车配置阶段</h4>
+            <video 
+                class="showcase-video"
+                src="{% static 'trucks/videos/1.mp4' %}"
+                controls 
+                muted 
+                preload="metadata"
+            >
+                你的浏览器不支持HTML5视频播放，请升级浏览器查看。
+            </video>
+            <p class="showcase-description">
+                本视频展示智能小车系统配置全过程，包含参数校准、传感器调试、导航地图构建等准备工作。
+            </p>
+        </div>
+
+        <!-- 第二个视频：小车正式启动 -->
+        <div class="video-card">
+            <h4>🚀 小车正式启动</h4>
+            <video 
+                class="showcase-video"
+                src="{% static 'trucks/videos/2.mp4' %}"
+                controls 
+                muted 
+                preload="metadata"
+            >
+                你的浏览器不支持HTML5视频播放，请升级浏览器查看。
+            </video>
+            <p class="showcase-description">
+                本视频展示智能小车完成配置后正式启动运行，实现自主导航、重载运输、自动作业全流程演示。
+            </p>
+        </div>
+    </div>
+</div>
+<!-- ========== 新增模块结束 ========== -->
+
+        </div>
+    </div>
+</div>
+
+<!-- 4. 发展历程：带图+时间轴（恢复图片） -->
+<div class="container">
+    <h2 class="page-title">发展历程</h2>
+    <p class="page-subtitle">从技术起步到全智能时代，每一步都扎实前行</p>
+    <div class="history-grid">
+        <div class="history-item">
+            <img src="{% static 'trucks/images/index/era1.jpg' %}" alt="2018 技术起步">
+            <div class="history-info">
+                <h3>2018 · 技术起步</h3>
+                <p>启动智能无人卡车研发，完成核心导航技术验证。</p>
+            </div>
+        </div>
+        <div class="history-item">
+            <img src="{% static 'trucks/images/index/era2.jpg' %}" alt="2020 功能完善">
+            <div class="history-info">
+                <h3>2020 · 功能完善</h3>
+                <p>自主避障、自动路径规划功能成熟，进入实地测试。</p>
+            </div>
+        </div>
+        <div class="history-item">
+            <img src="{% static 'trucks/images/index/era3.jpg' %}" alt="2022 规模落地">
+            <div class="history-info">
+                <h3>2022 · 规模落地</h3>
+                <p>多车协同调度系统上线，广泛应用于工厂、矿山、港口。</p>
+            </div>
+        </div>
+        <div class="history-item">
+            <img src="{% static 'trucks/images/index/era4.jpg' %}" alt="2024 全智能时代">
+            <div class="history-info">
+                <h3>2024 · 全智能时代</h3>
+                <p>AI自主决策，全场景自适应，成为新一代智能物流装备。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 5. 发展前景 -->
+<div class="prospect">
+    <div class="prospect-container">
+        <h2 class="page-title">发展前景</h2>
+        <p class="page-subtitle">随着工业4.0与智慧物流快速发展，智能机器人卡车已成为未来物流的核心装备。未来将全面替代人工运输，实现全场景无人化作业，广泛应用于制造、矿山、港口、仓储等领域，市场空间巨大。</p>
+        <div class="prospect-grid">
+            <div class="prospect-item">
+                <h3>🚀 行业趋势</h3>
+                <p>无人化、智能化、网联化是物流行业不可逆的发展方向，智能机器人卡车市场规模持续高速增长。</p>
+            </div>
+            <div class="prospect-item">
+                <h3>🌍 应用场景</h3>
+                <p>覆盖工厂转运、港口运输、矿山作业、仓储配送等全场景，彻底改变传统物流模式，效率提升3倍以上。</p>
+            </div>
+            <div class="prospect-item">
+                <h3>💡 企业愿景</h3>
+                <p>持续深耕无人驾驶核心技术，推动产品迭代升级，致力于成为全球领先的智能运输解决方案提供商。</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

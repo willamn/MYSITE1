@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+    margin: 0;
+    padding: 0;
+}
+/* 新增：图片上传组样式 */
+.image-upload-group {
+    margin-bottom: 10px;
+}
+</style>
+
+<div class="publish-container" style="max-width: 600px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+    <h2 style="font-size: 20px; font-weight: 600; color: #333; margin-bottom: 20px; text-align: center;">发布新帖子</h2>
+
+    <!-- 必加：文件上传编码 -->
+    <form method="post" action="{% url 'publish_post' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 14px; color: #333; margin-bottom: 8px;">帖子标题</label>
+            <input type="text" name="title" required style="width: 100%; padding: 12px; border: 1px solid #e0e8ff; border-radius: 6px; font-size: 14px; outline: none;">
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 14px; color: #333; margin-bottom: 8px;">帖子分类</label>
+            <select name="category" style="width: 100%; padding: 12px; border: 1px solid #e0e8ff; border-radius: 6px; font-size: 14px; outline: none;">
+                <option value="new_car">新车测评</option>
+                <option value="maintain">维修保养</option>
+                <option value="modify">整车改装</option>
+                <option value="chat">闲聊灌水</option>
+                <option value="tech_help">技术求助</option>
+                <option value="tech_share">技术交流</option>
+            </select>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 14px; color: #333; margin-bottom: 8px;">帖子内容</label>
+            <textarea name="content" rows="10" required style="width: 100%; padding: 12px; border: 1px solid #e0e8ff; border-radius: 6px; font-size: 14px; outline: none; resize: vertical;"></textarea>
+        </div>
+
+        <!-- ======================
+             🔥 核心：动态添加图片框
+             ====================== -->
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 14px; color: #333; margin-bottom: 8px;">帖子图片</label>
+            <!-- 存放所有图片上传框的容器 -->
+            <div id="imageContainer"></div>
+            <!-- 添加图片按钮 -->
+            <button type="button" id="addImageBtn" style="margin-top:10px; padding: 8px 16px; background: #f0f7ff; color: #165DFF; border: 1px solid #165DFF; border-radius: 6px; cursor: pointer;">
+                + 添加图片
+            </button>
+            <small style="color: #666; font-size: 12px; display: block; margin-top: 4px;">点击多次可添加多张，详情页会按顺序展示</small>
+        </div>
+
+        <button type="submit" style="width: 100%; padding: 12px; background: #165DFF; color: #fff; border: none; border-radius: 6px; font-size: 15px; font-weight: 500; cursor: pointer;">发布帖子</button>
+    </form>
+</div>
+
+<!-- 🔥 纯JS：动态添加图片上传框（点击一次加一个） -->
+<script>
+const addImageBtn = document.getElementById('addImageBtn');
+const imageContainer = document.getElementById('imageContainer');
+
+// 点击按钮 → 新增一个图片上传框
+addImageBtn.addEventListener('click', function () {
+    const div = document.createElement('div');
+    div.className = 'image-upload-group';
+    div.innerHTML = `<input type="file" name="images" accept="image/*" style="width: 100%; padding: 12px; border: 1px solid #e0e8ff; border-radius: 6px; font-size: 14px; outline: none; margin-top:5px;">`;
+    imageContainer.appendChild(div);
+});
+
+// 页面默认加载一个上传框
+window.onload = function () {
+    addImageBtn.click();
+}
+</script>
+{% endblock %}

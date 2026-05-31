@@ -1,0 +1,151 @@
+{% extends 'trucks/base.html' %}
+{% load static %}
+
+{% block title %}关于我们{% endblock %}
+
+{% block content %}
+
+<!-- ===================== 顶部 Banner ===================== -->
+<div style="position: relative; width: 100vw; height: 100vh; margin: 0; padding: 0; left: 0; right: 0; overflow: hidden;">
+    <img src="{% static 'trucks/images/about/about_banner.jpeg' %}" 
+         style="width: 100%; height: 100%; object-fit: cover; display: block;">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; text-align: center; z-index: 99;">
+        <h1 style="font-size: 56px; margin: 0; font-weight: 700; text-shadow: 0 4px 10px rgba(0,0,0,0.4);">关于我们</h1>
+    </div>
+</div>
+
+<!-- ===================== 公司介绍 ===================== -->
+<div style="position: relative; width: 100vw; height: 100vh; margin: 0; padding: 0; left: 0; right: 0; overflow: hidden;">
+    <a href="{% url 'company' %}" style="display: block; width: 100%; height: 100%; text-decoration: none;">
+        <img src="{% static 'trucks/images/about/company.jpg' %}" 
+             style="width: 100%; height: 100%; object-fit: cover; display: block;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4);"></div>
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #fff; z-index: 99;">
+            <h2 style="font-size: 48px; font-weight: bold; margin: 0 0 15px;">团体介绍</h2>
+            <p style="font-size: 20px; margin: 0; opacity: 0.95;">点击了解详情</p>
+        </div>
+    </a>
+</div>
+
+<!-- ===================== 核心成就（左图右文 + 锚点跳转） ===================== -->
+<div style="width: 100%; padding: 90px 5%; box-sizing: border-box; background: #fff;">
+    <div style="max-width: 1400px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 38px; font-weight: 700; color: #1e293b; margin: 0 0 60px;">核心成就</h2>
+
+        <!-- 技术实力 → 跳转到 company#tech -->
+        <div style="display: flex; align-items: center; gap: 60px; margin-bottom: 80px;">
+            <a href="{% url 'company' %}#tech" style="flex: 1; text-decoration: none;">
+                <img src="{% static 'trucks/images/about/tech_achievement.jpg' %}" 
+                     style="width: 100%; height: 400px; object-fit: cover; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: all 0.3s ease;">
+            </a>
+            <div style="flex: 1;">
+                <h3 style="font-size: 32px; font-weight: 700; color: #0d6efd; margin: 0 0 20px;">行业领先技术实力</h3>
+                <p style="font-size: 18px; line-height: 1.8; color: #475569; margin: 0;">
+                    自主核心技术，多项专利成果，持续迭代创新。
+                </p>
+            </div>
+        </div>
+
+        <!-- 产业生态 → 跳转到 company#industry -->
+        <div style="display: flex; align-items: center; gap: 60px; margin-bottom: 80px; flex-direction: row-reverse;">
+            <div style="flex: 1; text-align: right;">
+                <h3 style="font-size: 32px; font-weight: 700; color: #0d6efd; margin: 0 0 20px;">百亿级产业生态</h3>
+                <p style="font-size: 18px; line-height: 1.8; color: #475569; margin: 0;">
+                    多场景覆盖，全产业链布局，赋能数字化升级。
+                </p>
+            </div>
+            <a href="{% url 'company' %}#industry" style="flex: 1; text-decoration: none;">
+                <img src="{% static 'trucks/images/about/industry_achievement.jpg' %}" 
+                     style="width: 100%; height: 400px; object-fit: cover; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: all 0.3s ease;">
+            </a>
+        </div>
+
+        <!-- 合作网络 → 跳转到 company#cooperation -->
+        <div style="display: flex; align-items: center; gap: 60px;">
+            <a href="{% url 'company' %}#cooperation" style="flex: 1; text-decoration: none;">
+                <img src="{% static 'trucks/images/about/cooperation_achievement.jpg' %}" 
+                     style="width: 100%; height: 400px; object-fit: cover; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: all 0.3s ease;">
+            </a>
+            <div style="flex: 1;">
+                <h3 style="font-size: 32px; font-weight: 700; color: #0d6efd; margin: 0 0 20px;">完善合作网络</h3>
+                <p style="font-size: 18px; line-height: 1.8; color: #475569; margin: 0;">
+                    跨区域合作体系，高效稳定，互利共赢发展。
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== 发展历程 ===================== -->
+<div style="width:100%; padding:90px 5%; box-sizing:border-box; background:#f8fafc;">
+    <div style="max-width:1000px; margin:0 auto;">
+        <h2 style="text-align:center; font-size:38px; font-weight:700; color:#1e293b; margin:0 0 60px;">发展历程</h2>
+        <div style="position:relative; padding-left:40px;">
+            <div style="width:3px; background:#0d6efd; position:absolute; left:0; top:0; bottom:0; border-radius:3px;"></div>
+
+            <div style="margin-bottom:50px; position:relative;">
+                <div style="width:20px; height:20px; background:#0d6efd; border-radius:50%; position:absolute; left:-49px; top:8px; border:4px solid #fff;"></div>
+                <div style="background:#fff; border-radius:16px; padding:30px; box-shadow:0 8px 24px rgba(0,0,0,0.05);">
+                    <h3 style="font-size:20px; font-weight:700; color:#0d6efd; margin:0 0 10px;">2020 年 · 项目启动</h3>
+                    <p style="font-size:15px; color:#475569; line-height:1.7; margin:0;">组建研发团队，启动智能机器人卡车项目。</p>
+                </div>
+            </div>
+
+            <div style="margin-bottom:50px; position:relative;">
+                <div style="width:20px; height:20px; background:#0d6efd; border-radius:50%; position:absolute; left:-49px; top:8px; border:4px solid #fff;"></div>
+                <div style="background:#fff; border-radius:16px; padding:30px; box-shadow:0 8px 24px rgba(0,0,0,0.05);">
+                    <h3 style="font-size:20px; font-weight:700; color:#0d6efd; margin:0 0 10px;">2022 年 · 样机问世</h3>
+                    <p style="font-size:15px; color:#475569; line-height:1.7; margin:0;">首台智能卡车研发测试完成。</p>
+                </div>
+            </div>
+
+            <div style="margin-bottom:50px; position:relative;">
+                <div style="width:20px; height:20px; background:#0d6efd; border-radius:50%; position:absolute; left:-49px; top:8px; border:4px solid #fff;"></div>
+                <div style="background:#fff; border-radius:16px; padding:30px; box-shadow:0 8px 24px rgba(0,0,0,0.05);">
+                    <h3 style="font-size:20px; font-weight:700; color:#0d6efd; margin:0 0 10px;">2023 年 · 场景落地</h3>
+                    <p style="font-size:15px; color:#475569; line-height:1.7; margin:0;">商业化应用落地，系统全面优化。</p>
+                </div>
+            </div>
+
+            <div style="position:relative;">
+                <div style="width:20px; height:20px; background:#0d6efd; border-radius:50%; position:absolute; left:-49px; top:8px; border:4px solid #fff;"></div>
+                <div style="background:#fff; border-radius:16px; padding:30px; box-shadow:0 8px 24px rgba(0,0,0,0.05);">
+                    <h3 style="font-size:20px; font-weight:700; color:#0d6efd; margin:0 0 10px;">2025 年 · 成果展示</h3>
+                    <p style="font-size:15px; color:#475569; line-height:1.7; margin:0;">系统开发完成，项目正式展示。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== 企业愿景 & 价值观（极简左右版） ===================== -->
+<div style="width: 100%; padding: 100px 5%; box-sizing: border-box; background: #fff;">
+    <div style="max-width: 1400px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 60px; align-items: center;">
+
+        <div style="flex: 1; min-width: 400px;">
+            <img src="{% static 'trucks/images/about/vision.jpg' %}" 
+                 style="width: 100%; height: 500px; object-fit: cover; border-radius: 24px; box-shadow: 0 15px 40px rgba(0,0,0,0.1);">
+        </div>
+
+        <div style="flex: 1; min-width: 400px;">
+            <div style="margin-bottom: 60px;">
+                <h2 style="font-size: 36px; font-weight: 700; color: #0d6efd; margin: 0 0 20px;">企业愿景</h2>
+                <p style="font-size: 20px; line-height: 1.9; color: #334155; margin: 0;">
+                    国内领先智能无人运输解决方案，赋能智慧物流与智能制造。
+                </p>
+            </div>
+
+            <div>
+                <h2 style="font-size: 36px; font-weight: 700; color: #0d6efd; margin: 0 0 30px;">核心价值观</h2>
+                <ul style="padding: 0; margin: 0; list-style: none; font-size: 20px; color: #334155; line-height: 2.4;">
+                    <li>✔ 创新 · 持续突破</li>
+                    <li>✔ 专业 · 精益求精</li>
+                    <li>✔ 开放 · 共享共赢</li>
+                    <li>✔ 可靠 · 稳定高质</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

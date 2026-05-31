@@ -1,0 +1,78 @@
+{% extends 'trucks/base.html' %}
+{% load static %}
+
+{% block title %}团队介绍{% endblock %}
+
+{% block content %}
+
+<!-- ===================== 公司介绍：左右分栏 ===================== -->
+<div style="width: 100%; display: flex; flex-wrap: wrap; align-items: stretch; margin: 0; padding: 0; min-height: 600px;">
+    <!-- 左侧：蓝底文字区（修复圆角、内边距、文字排版） -->
+    <div style="flex: 1; min-width: 400px; background: #0d6efd; color: #fff; padding: 70px 60px; display: flex; flex-direction: column; justify-content: center; border-radius: 0 40px 40px 0; box-sizing: border-box;">
+        <h2 style="font-size: 44px; font-weight: 700; margin: 0 0 30px 0; line-height: 1.2;">团体介绍</h2>
+        <p style="font-size: 17px; line-height: 1.9; margin: 0 0 25px 0;">
+            贵州大学创建于 1902 年，是国家 “双一流” 建设高校、“211 工程” 重点建设高校，也是贵州省唯一的综合性重点大学。学校扎根贵州大地，秉持 “明德至善，博学笃行” 的校训，历经百年发展，形成了覆盖理、工、文、法、经、管等 12 大学科门类的综合性学科体系，尤其在工科、信息技术、智能制造等领域形成了鲜明特色与优势，为地方经济社会发展和国家战略需求培养了大批高素质人才。户提供安全、高效、可靠、可扩展的无人运输整体解决方案。
+        </p>
+        <p style="font-size: 17px; line-height: 1.9; margin: 0 0 25px 0;">
+            学校依托机械工程、计算机科学与技术、控制科学与工程等重点学科，搭建了多个面向智能制造、人工智能、大数据与无人系统的科研平台，汇聚了一批深耕智能控制、多传感器融合、无人驾驶等领域的专家学者与科研团队，持续攻克工业无人运输、智能机器人等领域的关键技术难题，推动科研成果向产业应用转化，为地方制造业智能化升级提供了有力的技术支撑。
+        </p>
+        <p style="font-size: 17px; line-height: 1.9; margin: 0;">
+            本智能机器人卡车项目依托贵州大学大数据与信息工程学院的科研资源，由在校师生组成的研发团队自主设计开发。项目以校园及工业场景下的无人运输需求为导向，融合学校在计算机、自动化与机械工程领域的学科优势，致力于打造安全、高效、可定制的轻量化智能无人运输解决方案，既是对所学专业知识的实践应用，也是青年学子助力智慧物流产业发展的一次探索。
+        </p>
+    </div>
+    <!-- 右侧：大图区（修复高度、图片加载、布局） -->
+    <div style="flex: 1.2; min-width: 500px; height: 100%; display: flex; align-items: stretch;">
+        <img src="{% static 'trucks/images/about/company_bg.jpg' %}" 
+             style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 0;">
+    </div>
+</div>
+
+<!-- ===================== 锚点1：技术实力（上图下文） ===================== -->
+<div id="tech" style="padding: 100px 5%; background: #f8fafc;">
+    <div style="max-width: 1000px; margin: 0 auto; text-align: center;">
+        <img src="{% static 'trucks/images/about/tech.jpg' %}" 
+             style="width: 100%; height: 480px; object-fit: cover; border-radius: 20px; box-shadow: 0 12px 32px rgba(0,0,0,0.08); margin-bottom: 40px;">
+        
+        <h2 style="font-size: 38px; color: #0d6efd; font-weight: 700; margin-bottom: 25px;">行业领先技术实力</h2>
+        <p style="font-size: 18px; line-height: 1.9; color: #334155; text-align: left;">
+            拥有一支由自动驾驶、人工智能、机器人控制、云计算等领域专家组成的核心研发团队，具备完全自主知识产权的无人车导航、定位、感知与决策系统。我们持续投入核心技术研发，拥有多项国家发明专利与软件著作权，实现关键技术自主可控。
+        </p>
+        <p style="font-size: 18px; line-height: 1.9; color: #334155; text-align: left; margin-top: 15px;">
+            通过不断迭代优化，产品在精度、稳定性、安全性上均达到行业领先水平，可满足复杂工业场景与开放道路下的无人运输需求，为各类场景提供稳定、可靠、高效的无人运输装备与系统支持。
+        </p>
+    </div>
+</div>
+
+<!-- ===================== 锚点2：产业生态（上图下文） ===================== -->
+<div id="industry" style="padding: 100px 5%; background: #ffffff;">
+    <div style="max-width: 1000px; margin: 0 auto; text-align: center;">
+        <img src="{% static 'trucks/images/about/industry.jpg' %}" 
+             style="width: 100%; height: 480px; object-fit: cover; border-radius: 20px; box-shadow: 0 12px 32px rgba(0,0,0,0.08); margin-bottom: 40px;">
+        
+        <h2 style="font-size: 38px; color: #0d6efd; font-weight: 700; margin-bottom: 25px;">百亿级产业生态</h2>
+        <p style="font-size: 18px; line-height: 1.9; color: #334155; text-align: left;">
+            依托成熟的无人运输技术，已经构建覆盖智能制造、智慧物流、港口码头、产业园区、机场枢纽等多场景的产业生态体系。我们为各行业提供从无人车辆、调度系统到运维服务的全链条解决方案。
+        </p>
+        <p style="font-size: 18px; line-height: 1.9; color: #334155; text-align: left; margin-top: 15px;">
+            目前已与多家大型企业、园区、政府项目达成深度合作，形成可复制、可规模化推广的产业模式，帮助企业降低成本、提升效率、强化安全管理，助力行业实现高质量发展。
+        </p>
+    </div>
+</div>
+
+<!-- ===================== 锚点3：合作网络（上图下文） ===================== -->
+<div id="cooperation" style="padding: 100px 5%; background: #f8fafc;">
+    <div style="max-width: 1000px; margin: 0 auto; text-align: center;">
+        <img src="{% static 'trucks/images/about/cooperation.jpg' %}" 
+             style="width: 100%; height: 480px; object-fit: cover; border-radius: 20px; box-shadow: 0 12px 32px rgba(0,0,0,0.08); margin-bottom: 40px;">
+        
+        <h2 style="font-size: 38px; color: #0d6efd; font-weight: 700; margin-bottom: 25px;">完善合作网络</h2>
+        <p style="font-size: 18px; line-height: 1.9; color: #334155; text-align: left;">
+            坚持开放共赢的合作理念，建立了覆盖全国的渠道合作、技术合作与服务合作体系。我们与高校、科研机构、行业协会、设备厂商、系统集成商形成长期稳定的战略合作关系，共同推动无人运输技术创新与落地。
+        </p>
+        <p style="font-size: 18px; line-height: 1.9; color: #334155; text-align: left; margin-top: 15px;">
+            凭借完善的售前、实施、售后保障体系，我们能够为合作伙伴提供快速响应、专业可靠的全方位支持，实现资源共享、优势互补、长期共赢，共同推动智能无人运输行业快速发展。
+        </p>
+    </div>
+</div>
+
+{% endblock %}

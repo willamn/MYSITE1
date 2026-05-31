@@ -1,0 +1,143 @@
+{% extends 'trucks/base.html' %}
+{% load static %}
+
+{% block title %}方案与应用 - 智能机器人卡车{% endblock %}
+
+{% block content %}
+
+<!-- 页面Banner -->
+<div class="page-banner">
+    <img src="{% static 'trucks/images/solution/solutions_banner.jpg' %}" alt="方案与应用">
+    <div class="banner-text">
+        <h1>方案与应用</h1>
+        <p>全场景无人化运输解决方案，赋能智慧物流升级</p>
+    </div>
+</div>
+
+<!-- 应用场景总览 -->
+<div class="container">
+    <h2 class="page-title">核心应用场景</h2>
+    <p class="page-subtitle">针对不同行业痛点，提供定制化无人运输解决方案</p>
+
+<!-- 场景1：工厂内部物流 -->
+<div class="scenario-item">
+    <div class="scenario-img">
+        <video controls muted preload="auto" style="width: 100%; height: auto; border-radius: 8px;">
+            <source src="{% static 'trucks/videos/solution/inner.mp4' %}" type="video/mp4">
+            您的浏览器不支持HTML5视频播放
+        </video>
+    </div>
+    <div class="scenario-text">
+        <h3>🏭 工厂内部物流</h3>
+        <h4>方案概述</h4>
+        <p>针对制造企业车间转运、原材料配送、成品入库等环节，提供全流程无人化运输方案，替代传统人工叉车，实现7×24小时不间断作业。</p>
+        <h4>核心优势</h4>
+        <ul>
+            <li>✅ 厘米级精准导航，适配车间复杂动线，零碰撞、零事故</li>
+            <li>✅ 大幅降低人力成本，提升车间物流效率80%以上</li>
+            <li>✅ 与MES、WMS系统无缝对接，实现物流数据全链路可视化</li>
+            <li>✅ 适配汽车制造、电子加工、食品医药等多行业场景</li>
+        </ul>
+        <h4>客户价值</h4>
+        <p>帮助工厂实现「黑灯车间」无人化运营，降低人工依赖，提升生产效率与安全性，打造柔性智能工厂。</p>
+    </div>
+</div>
+
+    <!-- 场景2：港口自动化物流 -->
+    <div class="scenario-item reverse">
+
+<div class="scenario-img">
+    <video controls muted preload="auto" style="width: 100%; height: auto; border-radius: 8px;">
+        <source src="{% static 'trucks/videos/solution/harbor.mp4' %}" type="video/mp4">
+        您的浏览器不支持HTML5视频播放
+    </video>
+</div>
+
+        <div class="scenario-text">
+            <h3>🚢 港口自动化物流</h3>
+            <h4>方案概述</h4>
+            <p>针对港口集装箱转运、堆场调度、码头接驳等场景，提供AGV无人运输解决方案，与岸桥、场桥设备协同作业，实现港口全流程无人化。</p>
+            <h4>核心优势</h4>
+            <ul>
+                <li>✅ 抗强光、抗粉尘、抗海风，适应港口恶劣作业环境</li>
+                <li>✅ 多车协同调度，实现集装箱自动化转运与仓储管理</li>
+                <li>✅ 提升码头周转效率，降低人工依赖，适配智慧港口建设</li>
+                <li>✅ 24小时不间断作业，大幅提升港口吞吐量与运营效率</li>
+            </ul>
+            <h4>客户价值</h4>
+            <p>助力港口实现「自动化码头」升级，降低人工成本与安全风险，打造全球领先的智慧港口标杆。</p>
+        </div>
+    </div>
+
+<!-- 场景3：矿山场景运输 -->
+<div class="scenario-item">
+    <div class="scenario-img">
+        <video controls muted preload="auto" style="width: 100%; height: auto; border-radius: 8px;">
+            <source src="{% static 'trucks/videos/solution/mine.mp4' %}" type="video/mp4">
+            您的浏览器不支持HTML5视频播放
+        </video>
+    </div>
+    <div class="scenario-text">
+        <h3>⛰️ 矿山场景运输</h3>
+        <h4>方案概述</h4>
+        <p>针对露天矿、地下矿复杂工况，提供重载无人运输解决方案，替代人工驾驶矿卡，完成矿石、渣土的自主转运，彻底规避矿山作业安全风险。</p>
+        <h4>核心优势</h4>
+        <ul>
+            <li>✅ 50吨级重载底盘，适应矿山崎岖路面与极端天气</li>
+            <li>✅ AI自主决策，实现矿车自主转运、会车、避障全流程无人化</li>
+            <li>✅ 运输效率提升50%，降低运营成本30%+，彻底杜绝安全事故</li>
+            <li>✅ 与矿山调度系统深度融合，实现车队全生命周期管理</li>
+        </ul>
+        <h4>客户价值</h4>
+        <p>帮助矿山实现「无人化矿山」转型，保障作业人员安全，提升运输效率，降低运营成本，推动矿山行业智能化升级。</p>
+    </div>
+</div>
+
+<!-- 场景4：智能仓储解决方案 -->
+<div class="scenario-item reverse">
+    <div class="scenario-img">
+        <video controls muted preload="auto" style="width: 100%; height: auto; border-radius: 8px;">
+            <source src="{% static 'trucks/videos/solution/warehouse.mp4' %}" type="video/mp4">
+            您的浏览器不支持HTML5视频播放
+        </video>
+    </div>
+    <div class="scenario-text">
+        <h3>📦 智能仓储解决方案</h3>
+        <h4>方案概述</h4>
+        <p>针对仓储园区货物转运、出入库、盘点、转运等环节，提供无人化AGV运输方案，构建仓储无人化作业体系，实现货物自动出入库、盘点、转运全流程自动化。</p>
+        <h4>核心优势</h4>
+        <ul>
+            <li>✅ 多传感器融合导航，适配仓储复杂环境，精准停靠货架</li>
+            <li>✅ 与WMS、ERP系统无缝对接，实现仓储数据可视化管理</li>
+            <li>✅ 提升仓储空间利用率，降低仓储运营成本，提升作业效率</li>
+            <li>✅ 适配电商仓储、制造业仓储、冷链仓储等多场景</li>
+        </ul>
+        <h4>客户价值</h4>
+        <p>助力仓储实现「无人化仓储」升级，提升仓储运营效率，降低人工成本，打造柔性智能仓储体系。</p>
+    </div>
+</div>
+    <!-- 方案优势总结 -->
+    <div class="advantage-section">
+        <h2 class="page-title">方案核心优势</h2>
+        <div class="advantage-grid">
+            <div class="advantage-card">
+                <h3>🔧 全场景适配</h3>
+                <p>覆盖工厂、港口、矿山、仓储等多行业，定制化解决方案，满足不同场景需求</p>
+            </div>
+            <div class="advantage-card">
+                <h3>🤖 全链路自主</h3>
+                <p>从感知、决策到控制全链路自主研发，核心技术自主可控，无需人工干预</p>
+            </div>
+            <div class="advantage-card">
+                <h3>📊 全数据打通</h3>
+                <p>与企业现有MES、WMS、ERP等系统无缝对接，实现物流数据全链路可视化管理</p>
+            </div>
+            <div class="advantage-card">
+                <h3>💡 全周期服务</h3>
+                <p>提供从方案设计、部署实施到运维升级的全周期服务，保障项目落地与持续优化</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

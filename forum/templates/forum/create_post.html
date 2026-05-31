@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h3>在【{{ cate.name }}】发布新帖子</h3>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label>帖子标题</label>
+            <input type="text" name="title" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label>帖子内容</label>
+            <textarea name="content" class="form-control" rows="6" required></textarea>
+        </div>
+        <button class="btn btn-success">提交发布</button>
+    </form>
+</div>
+{% endblock %}

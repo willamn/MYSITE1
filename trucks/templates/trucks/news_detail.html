@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+.detail-container{
+    width:80%;
+    margin:60px auto;
+}
+.detail-title{
+    font-size:32px;
+    font-weight:bold;
+    text-align:center;
+    margin-bottom:20px;
+}
+.detail-date{
+    text-align:center;
+    color:#888;
+    margin-bottom:40px;
+}
+.detail-banner-img{
+    width:100%;
+    max-height:500px;
+    object-fit:cover;
+    border-radius:8px;
+    margin-bottom:40px;
+}
+.detail-content{
+    font-size:16px;
+    line-height:2;
+    color:#333;
+}
+</style>
+
+<div class="detail-container">
+    <h1 class="detail-title">{{ new.title }}</h1>
+    <div class="detail-date">{{ new.create_time|date:"Y年m月d日" }}</div>
+
+    {% if new.img %}
+    <img class="detail-banner-img" src="{{ new.img.url }}" alt="">
+    {% endif %}
+
+    <div class="detail-content">
+        {{ new.content|safe }}
+    </div>
+</div>
+
+{% endblock %}

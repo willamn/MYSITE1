@@ -1,0 +1,187 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% trans '智能机器人卡车' %}{% endblock %}</title>
+
+    {% include 'trucks/style.html' %}
+    {% load static %}
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+        }
+        .navbar {
+            width: 100%;
+            height: 70px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 22px;
+            font-weight: bold;
+            color: #0066CC;
+        }
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 16px;
+            transition: color 0.3s;
+            padding-bottom: 24px;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: #0066CC;
+            border-bottom: 2px solid #0066CC;
+        }
+        .lang-switch {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* 导航头像边框样式 */
+        .nav-avatar-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .nav-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .nav-avatar-frame {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .frame-1 { border: 2px solid #999; }
+        .frame-2 { border: 2px solid #28a745; }
+        .frame-3 { border: 2px solid #007bff; }
+        .frame-4 { border: 2px solid #ffc107; box-shadow: 0 0 4px #ffc107; }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+
+<style>
+#robot-pet {
+    position: fixed; right: 30px; bottom: 40px; z-index: 9999999;
+    cursor: pointer; user-select: none; transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+    transform-origin: center bottom; width: 140px;
+    background: transparent !important; border: none !important; outline: none !important;
+}
+#robot-current { width: 100%; display: block; background: transparent; border: 0; backface-visibility: hidden; }
+#maxkb-modal {
+    position: fixed; right: 20px; bottom: 170px; width: 460px; height: 660px;
+    border: none; border-radius: 14px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 99999999; display: none;
+}
+#maxkb-close {
+    position: fixed; right: 465px; bottom: 830px; width: 34px; height: 34px;
+    border-radius: 50%; border: none; background-color: #ef4444; color: #fff;
+    font-size: 20px; font-weight: bold; cursor: pointer; z-index: 999999999; display: none;
+}
+</style>
+
+<div id="robot-pet">
+    <img id="robot-current" src="{% static 'trucks/images/robot/robot1.svg' %}" alt="智能机器人">
+</div>
+<button id="maxkb-close">×</button>
+<iframe id="maxkb-modal" src="http://192.168.118.128:8080/chat/b6d825d617092330"></iframe>
+
+<script>
+const robotImg = document.getElementById('robot-current');
+const robotPet = document.getElementById('robot-pet');
+const chatModal = document.getElementById('maxkb-modal');
+const closeBtn = document.getElementById('maxkb-close');
+const ROBOT = {sit:"{% static 'trucks/images/robot/robot1.svg' %}",stand:"{% static 'trucks/images/robot/robot2.svg' %}",turnL:"{% static 'trucks/images/robot/robot3.svg' %}",walkL:"{% static 'trucks/images/robot/robot4.svg' %}",turnR:"{% static 'trucks/images/robot/robot5.svg' %}",walkR:"{% static 'trucks/images/robot/robot6.svg' %}"};
+const WAIT_SIT=6000,STEP_SLOW=1100;const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function preloadAssets(){Object.values(ROBOT).forEach(src=>{const tempImg=new Image();tempImg.src=src;})}preloadAssets();
+function setFrame(src){robotImg.src=src;}
+function moveRobot(x){robotPet.style.transform=`translateX(${x}px)`;}
+async function robotLoop(){while(true){setFrame(ROBOT.sit);await sleep(WAIT_SIT);setFrame(ROBOT.stand);await sleep(800);setFrame(ROBOT.turnL);await sleep(600);setFrame(ROBOT.walkL);moveRobot(-70);await sleep(STEP_SLOW*2.2);setFrame(ROBOT.stand);await sleep(600);setFrame(ROBOT.sit);await sleep(WAIT_SIT);setFrame(ROBOT.stand);await sleep(800);setFrame(ROBOT.turnR);await sleep(600);setFrame(ROBOT.walkR);moveRobot(0);await sleep(STEP_SLOW*2.2);setFrame(ROBOT.stand);await sleep(600);setFrame(ROBOT.sit);await sleep(1200);}}
+robotPet.addEventListener('click',()=>{chatModal.style.display='block';closeBtn.style.display='block';});
+closeBtn.addEventListener('click',e=>{e.stopPropagation();chatModal.style.display='none';closeBtn.style.display='none';});
+robotLoop();
+</script>
+
+<body>
+<div class="navbar">
+    <div style="display: flex; align-items: center; gap: 30px;">
+        <div class="logo"><span>{% trans '智能机器人卡车' %}</span></div>
+        <div class="nav-links">
+            <a href="/" class="{% if request.path == '/' %}active{% endif %}">{% trans '首页' %}</a>
+            <a href="/trucks/" class="{% if request.path == '/trucks/' %}active{% endif %}">{% trans '产品中心' %}</a>
+            <a href="/solutions/" class="{% if request.path == '/solutions/' %}active{% endif %}">{% trans '方案应用' %}</a>
+            <a href="/service/" class="{% if request.path == '/service/' %}active{% endif %}">{% trans '服务支持' %}</a>
+            <a href="/forum/" class="{% if request.path == '/forum/' %}active{% endif %}">{% trans '技术论坛' %}</a>
+            <a href="/developer/" class="{% if request.path == '/developer/' %}active{% endif %}">{% trans '开发中心' %}</a>
+            <a href="/news/" class="{% if request.path == '/news/' %}active{% endif %}">{% trans '资讯动态' %}</a>
+            <a href="/about/" class="{% if request.path == '/about/' %}active{% endif %}">{% trans '关于我们' %}</a>
+        </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 20px;">
+        <div class="lang-switch">中文 / EN</div>
+        <div class="user-center" style="display: flex; align-items: center; gap: 10px;">
+            {% if user.is_authenticated %}
+            <!-- 头像+等级专属边框 -->
+            <a href="{% url 'user_center' %}" style="flex-shrink:0; text-decoration:none;">
+                <div class="nav-avatar-wrapper">
+                    <img src="{% if user.profile.avatar %}{{ user.profile.avatar.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" style="width:100%;height:100%;object-fit:cover;" alt="头像">
+                    <span class="nav-avatar-frame frame-{{ user.userinfo.level }}"></span>
+                </div>
+            </a>
+
+            <!-- 钻石等级标识 保留你原版样式 -->
+            {% if user.userinfo.level == 1 %}
+                <span style="font-size:12px;font-weight:bold;color:#999;">♦️普通用户</span>
+            {% elif user.userinfo.level == 2 %}
+                <span style="font-size:12px;font-weight:bold;color:#28a745;">💎普通会员</span>
+            {% elif user.userinfo.level == 3 %}
+                <span style="font-size:12px;font-weight:bold;color:#007bff;">💎💎超级会员</span>
+            {% elif user.userinfo.level == 4 %}
+                <span style="font-size:12px;font-weight:bold;color:#ffd700;">✨💎✨至尊会员</span>
+            {% endif %}
+
+            <!-- 固定展示 用户名 绝不显示手机号 -->
+            <span style="font-size:14px; white-space:nowrap;">{{ user.first_name }}</span>
+            <a href="/logout/" style="font-size:14px; color:#333; text-decoration:none;">退出</a>
+
+            {% else %}
+                <a href="{% url 'login' %}" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+                    <div style="width:32px;height:32px;border-radius:50%;background:#0066CC;display:flex;align-items:center;justify-content:center;">
+                        <i class="fa-solid fa-user" style="color:white;"></i>
+                    </div>
+                    <span style="font-size:14px; color:#333;">登录</span>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% block content %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+/* 顶部 Banner —— 已经自动加载图片 */
+.dev-banner {
+    width: 100%;
+    height: 500px;
+    background: linear-gradient(rgba(0,20,40,0.6), rgba(0,20,40,0.6)),
+                url("{% static 'trucks/images/developer/banner.jpg' %}") center / cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    margin-bottom: 70px;
+    text-align: center;
+}
+
+.dev-banner h1 {
+    font-size: 38px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+.dev-banner p {
+    font-size: 17px;
+    opacity: 0.9;
+}
+
+.dev-container {
+    width: 85%;
+    margin: 0 auto 100px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
+
+.dev-card {
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 45px 35px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+.dev-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    border-color: #16478a;
+}
+.dev-icon {
+    font-size: 46px;
+    margin-bottom: 22px;
+}
+.dev-card h3 {
+    font-size: 22px;
+    margin-bottom: 14px;
+}
+.dev-card p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #555;
+}
+
+@media(max-width:992px) {
+    .dev-container {
+        grid-template-columns: 1fr;
+    }
+}
+/* 弹窗样式（不影响原有布局） */
+.dev-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 30px 40px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    z-index: 9999;
+    text-align: center;
+}
+.dev-modal p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #333;
+}
+.dev-modal button {
+    padding: 8px 20px;
+    background: #16478a;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.dev-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.3);
+    z-index: 9998;
+}
+</style>
+
+<!-- 顶部 Banner（已带图片） -->
+<div class="dev-banner">
+    <h1>开发中心</h1>
+    <p>开放技术能力 · 赋能智能生态 · 共创无人运输未来</p>
+</div>
+
+<!-- 卡片 -->
+<div class="dev-container">
+    <!-- 开发者文档 -->
+    <div onclick="checkPermission('{% url 'document' %}')" style="text-decoration: none;color:inherit;">
+        <div class="dev-card">
+            <div class="dev-icon">📘</div>
+            <h3>开发者文档</h3>
+            <p>提供完整机器人卡车SDK手册、标准API接口协议、二次开发指南、接入教程与代码示例。</p>
+        </div>
+    </div>
+
+    <!-- 开发工具包 -->
+    <div onclick="checkPermission('{% url 'devtools' %}')" style="text-decoration: none;color:inherit;">
+        <div class="dev-card">
+            <div class="dev-icon">🧰</div>
+            <h3>开发工具包</h3>
+            <p>集成调试诊断工具、仿真运行环境、数据采集套件、测试平台，降低开发门槛。</p>
+        </div>
+    </div>
+
+    <!-- 合作开发计划 -->
+    <div onclick="checkPermission('{% url 'cooperate' %}')" style="text-decoration: none;color:inherit;">
+        <div class="dev-card">
+            <div class="dev-icon">🤝</div>
+            <h3>合作开发计划</h3>
+            <p>开放底层技术、硬件适配协议与定制开发权限，共建智能机器人卡车开放生态。</p>
+        </div>
+    </div>
+</div>
+
+<!-- 核心：修复后的权限校验JS -->
+<script>
+function checkPermission(url) {
+    // 适配你的 UserInfo 模型校验规则
+    {% if not user.is_authenticated %}
+        // 未登录游客
+        showModal("请登录后访问");
+    {% elif user.userinfo.level == 1 %}
+        // 普通用户（level=1）
+        showModal("您还不是会员用户");
+    {% else %}
+        // 会员用户（level≥2：普通会员/超级会员/至尊会员）正常跳转
+        window.location.href = url;
+    {% endif %}
+}
+
+// 弹窗函数
+function showModal(msg) {
+    let oldMask = document.querySelector('.dev-mask');
+    let oldModal = document.querySelector('.dev-modal');
+    if(oldMask) oldMask.remove();
+    if(oldModal) oldModal.remove();
+
+    let mask = document.createElement('div');
+    mask.className = 'dev-mask';
+    document.body.appendChild(mask);
+
+    let modal = document.createElement('div');
+    modal.className = 'dev-modal';
+    modal.innerHTML = `
+        <p>${msg}</p>
+        <button onclick="closeModal()">确定</button>
+    `;
+    document.body.appendChild(modal);
+}
+
+// 关闭弹窗
+function closeModal() {
+    document.querySelector('.dev-mask').remove();
+    document.querySelector('.dev-modal').remove();
+}
+</script>
+{% endblock %}

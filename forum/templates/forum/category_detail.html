@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="max-width:1280px;margin:30px auto;padding:0 20px;">
+    <h2>{{ category.name }}</h2>
+    <hr style="margin:20px 0;">
+
+    {% for p in post_list %}
+    <div style="padding:15px 0;border-bottom:1px solid #eee;">
+        <h4><a href="{% url 'post_detail' p.id %}" style="text-decoration:none;">{{ p.title }}</a></h4>
+    </div>
+    {% empty %}
+    <p>该分类下暂无帖子</p>
+    {% endfor %}
+</div>
+{% endblock %}

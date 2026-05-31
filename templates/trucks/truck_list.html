@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>卡车列表</title>
+    <style>
+        body { font-family: Arial; max-width: 1000px; margin: 20px auto; padding: 0 20px; }
+        h1 { color: #2c3e50; text-align: center; }
+        .truck-card { border: 1px solid #ddd; padding: 20px; margin: 10px 0; border-radius: 8px; }
+        .empty-tip { text-align: center; color: #999; font-size: 18px; margin-top: 50px; }
+    </style>
+</head>
+<body>
+    <h1>汽车人卡车展示</h1>
+    {% if trucks %}
+        {% for truck in trucks %}
+        <div class="truck-card">
+            <h3>{{ truck.name }}</h3>
+            <p><strong>品牌：</strong>{{ truck.brand }}</p>
+            <p><strong>价格：</strong>{{ truck.price }} 万</p>
+            <p><strong>描述：</strong>{{ truck.description|default:"暂无描述" }}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="empty-tip">暂无卡车数据 → <a href="/admin">点击添加</a></div>
+    {% endif %}
+</body>
+</html>

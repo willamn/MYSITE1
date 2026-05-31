@@ -1,0 +1,319 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+/* 全局重置 */
+*{margin:0;padding:0;box-sizing:border-box;}
+
+/* 顶部大轮播容器 */
+.big-banner-slider{
+    width:100%;
+    height:1000px;
+    position:relative;
+    overflow:hidden;
+    background:#112a46;
+    margin-bottom:60px;
+}
+
+/* 单个轮播项 */
+.slide-item{
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:0;
+    left:0;
+    opacity:0;
+    transition:opacity 0.8s ease;
+    display:flex;
+    align-items:center;
+    padding:0 100px;
+    gap:60px;
+    color:white;
+}
+.slide-item.active{
+    opacity:1;
+    z-index:2;
+}
+
+/* 轮播图片 */
+.slide-img{
+    flex:1.6;
+    height:800px;
+    border-radius:8px;
+    overflow:hidden;
+    cursor:pointer;
+    position: relative; /* 新增：用于浏览量定位 */
+}
+.slide-img img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:0.3s;
+}
+.slide-img img:hover{
+    transform:scale(1.03);
+}
+
+/* 轮播文字 */
+.slide-text{
+    flex:1;
+}
+.slide-date{
+    font-size:16px;
+    opacity:0.8;
+    margin-bottom:15px;
+}
+.slide-title{
+    font-size:30px;
+    font-weight:bold;
+    margin-bottom:20px;
+    line-height:1.4;
+}
+.slide-desc{
+    font-size:16px;
+    line-height:1.8;
+    opacity:0.9;
+}
+
+/* 轮播小圆点指示器 */
+.slider-dots{
+    position:absolute;
+    bottom:30px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:10;
+    display:flex;
+    gap:12px;
+}
+.dot{
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.4);
+    cursor:pointer;
+}
+.dot.active{
+    background:white;
+}
+
+/* 下方资讯列表 */
+.news-section{
+    width:90%;
+    margin:0 auto 80px;
+}
+.news-item{
+    padding:20px 0;
+    border-bottom:1px solid #eee;
+    cursor:pointer;
+}
+.news-item h4{
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+/* ====================== */
+/* 新增：浏览量悬浮样式 */
+/* ====================== */
+.views-overlay {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.4); /* 半透明背景 */
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    z-index: 5;
+}
+/* 鼠标悬浮显示 */
+.slide-img:hover .views-overlay,
+.news-card:hover .views-overlay {
+    opacity: 1;
+}
+/* 眼睛图标样式 */
+.views-icon {
+    opacity: 0.9;
+}
+</style>
+
+<!-- 顶部：3条热门资讯自动轮播大框 -->
+<div class="big-banner-slider">
+    {% for item in top_news %}
+    <div class="slide-item">
+        <div class="slide-img" onclick="window.location='/news/{{item.id}}/'">
+            {% if item.img %}
+            <img src="{{item.img.url}}" alt="{{item.title}}">
+            {% endif %}
+            <!-- 新增：轮播图浏览量 -->
+            <div class="views-overlay">
+                <span class="views-icon">👁</span>
+                <span>{{ item.views }}</span>
+            </div>
+        </div>
+        <div class="slide-text">
+            <div class="slide-date">{{item.create_time|date:"Y年m月d日"}}</div>
+            <h2 class="slide-title">{{item.title}}</h2>
+            <p class="slide-desc">{{item.summary}}</p>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- 轮播小圆点 -->
+    <div class="slider-dots"></div>
+</div>
+
+<!-- 下方：全部资讯列表 -->
+<!-- 下方全部资讯 日产同款卡片效果 -->
+<div class="news-section">
+    <h3 class="section-title">全部资讯动态</h3>
+    <div class="news-grid">
+        {% for n in all_news %}
+        <div class="news-card" onclick="window.location='/news/{{n.id}}/'">
+            <!-- 资讯封面图 -->
+            {% if n.img %}
+            <img src="{{ n.img.url }}" alt="{{ n.title }}">
+            {% else %}
+            <!-- 无图时默认占位底色 -->
+            <div class="card-placeholder"></div>
+            {% endif %}
+
+            <!-- 新增：卡片浏览量 -->
+            <div class="views-overlay">
+                <span class="views-icon">👁</span>
+                <span>{{ n.views }}</span>
+            </div>
+
+            <!-- 鼠标悬浮才显示的遮罩信息 -->
+            <div class="card-info-hover">
+                <div class="card-date">{{ n.create_time|date:"Y.m.d" }}</div>
+                <div class="card-name">{{ n.title }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+/* 区块标题 */
+.section-title{
+    font-size:26px;
+    margin:80px 0 40px 6%;
+}
+
+/* 4列网格布局 */
+.news-grid{
+    width:88%;
+    margin:0 auto 100px;
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:32px;
+}
+
+/* 单个卡片容器 */
+.news-card{
+    position:relative;
+    aspect-ratio:16 / 9;
+    border-radius:6px;
+    overflow:hidden;
+    cursor:pointer;
+}
+
+/* 卡片图片 */
+.news-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:all 0.3s ease;
+}
+
+/* 默认占位底色 */
+.card-placeholder{
+    width:100%;
+    height:100%;
+    background:#2c5c92;
+}
+
+/* 悬浮遮罩层（默认隐藏） */
+.card-info-hover{
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:100%;
+    padding:24px 20px;
+    background:linear-gradient(transparent, rgba(0,0,0,0.8));
+    color:#ffffff;
+    opacity:0;
+    transition:0.3s ease;
+}
+
+/* 日期文字 */
+.card-date{
+    font-size:14px;
+    opacity:0.85;
+    margin-bottom:8px;
+}
+
+/* 标题文字 */
+.card-name{
+    font-size:16px;
+    font-weight:500;
+    line-height:1.4;
+}
+
+/* 鼠标悬浮触发全部效果 */
+.news-card:hover .card-info-hover{
+    opacity:1;
+}
+.news-card:hover img{
+    transform:scale(1.07);
+}
+</style>
+
+<script>
+// 轮播自动切换逻辑
+document.addEventListener('DOMContentLoaded',function(){
+    const slides = document.querySelectorAll('.slide-item');
+    const dotsWrap = document.querySelector('.slider-dots');
+    let currentIndex = 0;
+
+    // 没有资讯就不运行轮播
+    if(slides.length === 0) return;
+
+    // 生成小圆点
+    slides.forEach((_,i)=>{
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if(i===0) dot.classList.add('active');
+        dot.addEventListener('click',()=> goSlide(i));
+        dotsWrap.appendChild(dot);
+    })
+
+    // 切换轮播
+    function goSlide(index){
+        slides.forEach((s,i)=>{
+            s.classList.remove('active');
+            document.querySelectorAll('.dot')[i].classList.remove('active');
+        })
+        slides[index].classList.add('active');
+        document.querySelectorAll('.dot')[index].classList.add('active');
+        currentIndex = index;
+    }
+
+    // 默认显示第一张
+    goSlide(0);
+
+    // 自动轮播 5秒切换一次
+    setInterval(()=>{
+        currentIndex = (currentIndex +1) % slides.length;
+        goSlide(currentIndex);
+    },5000)
+})
+</script>
+
+{% endblock %}

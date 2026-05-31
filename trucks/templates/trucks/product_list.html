@@ -1,0 +1,241 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- 热推车型专区 -->
+<style>
+.hot-car-wrapper {
+    width: 100%;
+    padding: 50px 100px;
+    background-color: #f0f5ff;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.hot-car-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 auto 30px;
+    color: #0056b3;
+    text-align: center;
+    position: relative;
+    padding-bottom: 15px;
+}
+.hot-car-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: #0056b3;
+}
+.hot-car-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px 30px;
+}
+.hot-car-card {
+    text-align: center;
+    transition: all 0.3s ease;
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    text-decoration: none;
+    color: inherit;
+}
+.hot-car-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+.hot-car-img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background-color: #f5f5f5;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    object-fit: cover;
+}
+.hot-car-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.hot-car-desc {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+}
+.hot-btn {
+    padding: 8px 20px;
+    background: #0056b3;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+.view-all-btn {
+    display: block;
+    width: fit-content;
+    margin: 30px auto 0;
+    padding: 10px 25px;
+    border: 1px solid #0056b3;
+    color: #0056b3;
+    border-radius: 4px;
+    text-decoration: none;
+}
+.view-all-btn:hover {
+    background: #0056b3;
+    color: #fff;
+}
+</style>
+
+<div class="hot-car-wrapper">
+    <h2 class="hot-car-title">🔥 热推车型专区</h2>
+    <div class="hot-car-grid">
+        {% for car in hot_cars %}
+        <a href="/trucks/hotcar/{{ car.id }}/" class="hot-car-card">
+            <img src="{{ car.cover_image.url }}" class="hot-car-img" alt="{{ car.name }}">
+            <div class="hot-car-name">{{ car.name }}</div>
+            <div class="hot-car-desc">{{ car.short_desc }}</div>
+            <button class="hot-btn">查看详情</button>
+        </a>
+        {% empty %}
+        <div style="grid-column: 1/-1; text-align: center; padding: 30px 0; color:#888;">暂无热推车型</div>
+        {% endfor %}
+    </div>
+    <a href="#all-cars" class="view-all-btn">查看全部车型 →</a>
+</div>
+
+<!-- 原有全部车型代码 -->
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Microsoft YaHei", sans-serif;
+}
+
+.product-container {
+    width: 100%;
+    min-height: 80vh;
+    padding: 60px 100px;
+    display: flex;
+    gap: 80px;
+}
+
+.left-category {
+    width: 160px;
+    flex-shrink: 0;
+}
+.group-label {
+    font-size: 13px;
+    color: #888;
+    margin: 30px 0 10px;
+}
+.group-label:first-child {
+    margin-top: 0;
+}
+.category-item {
+    padding: 10px 0;
+    font-size: 15px;
+    cursor: pointer;
+    color: #333;
+    transition: 0.2s;
+}
+.category-item.active {
+    font-weight: 700;
+    color: #000;
+}
+.category-item:hover {
+    color: #000;
+}
+
+.right-product {
+    flex: 1;
+}
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 60px 40px;
+}
+.product-card {
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: #111;
+    transition: 0.3s ease;
+}
+.product-card:hover {
+    transform: translateY(-4px);
+}
+.card-empty-img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+.product-name {
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+.hide-card {
+    display: none !important;
+}
+</style>
+
+<div class="product-container" id="all-cars">
+    <div class="left-category">
+        <div class="category-item active" data-cid="0">全部车型</div>
+        <div class="group-label">车型</div>
+        {% for cat in categories %}
+        <div class="category-item" data-cid="{{ cat.id }}">{{ cat.name }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="right-product">
+        <div class="product-grid">
+            {% for item in trucks %}
+            <a href="/trucks/{{ item.id }}/" class="product-card" data-cid="{{ item.category.id }}">
+                {% if item.img_url %}
+            <img src="{{ item.img_url.url }}" class="card-empty-img" alt="{{ item.name }}">
+                {% else %}
+            <div class="card-empty-img"></div>
+                {% endif %}
+                <div class="product-name">{{ item.name }}</div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    const navList = document.querySelectorAll('.category-item');
+    const cardList = document.querySelectorAll('.product-card');
+
+    navList.forEach(function(nav){
+        nav.addEventListener('click', function(){
+            const currentCid = this.dataset.cid;
+
+            navList.forEach(function(n){
+                n.classList.remove('active');
+            });
+            this.classList.add('active');
+
+            cardList.forEach(function(card){
+                const cardCid = card.dataset.cid;
+                if(currentCid === '0' || cardCid === currentCid){
+                    card.classList.remove('hide-card');
+                }else{
+                    card.classList.add('hide-card');
+                }
+            });
+        });
+    });
+});
+</script>
+{% endblock %}
